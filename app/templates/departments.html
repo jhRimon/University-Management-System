@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Departments</h2>
+<p>Maintain the academic structure without exposing one-click destructive actions inside the main table.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Department Directory</h3>
+<div class="card-tools-row">
+<a href="/add_department" class="btn btn-success btn-sm">Add Department</a>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Office</th>
+<th class="text-right">Manage</th>
+</tr>
+</thead>
+<tbody>
+{% for d in departments %}
+<tr>
+<td>{{ d.dept_id }}</td>
+<td>{{ d.dept_name }}</td>
+<td>{{ d.office_location }}</td>
+<td class="text-right">
+<a href="{{ url_for('main.confirm_delete', entity='department', record_id=d.dept_id) }}" class="btn btn-outline-danger btn-sm">Review Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

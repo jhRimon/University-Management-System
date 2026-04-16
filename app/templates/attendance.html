@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Attendance Ledger</h2>
+<p>Attendance is designed to originate from teaching sections, and the ledger remains here for audit and reporting.</p>
+{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+<a href="/teacher_portal" class="btn btn-primary">Open Teacher Portal</a>
+<a href="/add_attendance" class="btn btn-success">Attendance Console</a>
+</div>
+
+<div class="card">
+<div class="card-body p-0">
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Date</th>
+<th>Registration</th>
+<th>Student</th>
+<th>Course</th>
+<th>Section</th>
+<th>Faculty</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{% for a in attendance %}
+<tr>
+<td>{{ a.class_date }}</td>
+<td>{{ a.student_reg_no }}</td>
+<td>{{ a.student_name }}</td>
+<td>{{ a.course_name }}</td>
+<td>{{ a.section_name }} <span class="text-muted">{{ a.semester }}</span></td>
+<td>{{ a.faculty_name }}</td>
+<td>
+<span class="badge badge-{{ 'success' if a.status == 'Present' else 'danger' }}">{{ a.status }}</span>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

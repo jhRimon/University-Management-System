@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Add Course</h2>
+
+<form method="POST">
+
+<input class="form-control mb-3"
+name="course_code"
+placeholder="Course Code">
+
+<input class="form-control mb-3"
+name="course_name"
+placeholder="Course Name">
+
+<input class="form-control mb-3"
+name="credit_hours"
+placeholder="Credit Hours">
+
+<select class="form-control mb-3"
+name="course_type">
+
+<option value="Theory">Theory</option>
+<option value="Lab">Lab</option>
+
+</select>
+
+<select class="form-control mb-3"
+name="dept_id">
+
+{% for d in departments %}
+
+<option value="{{ d.dept_id }}">
+{{ d.dept_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<button class="btn btn-primary">
+Add Course
+</button>
+
+</form>
+
+{% endblock %}

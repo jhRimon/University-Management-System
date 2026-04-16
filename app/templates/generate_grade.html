@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Automatic Grade Generator</h2>
+<p>Final grades are computed from saved theory or lab components based on course type. Existing grade records are updated when regenerated.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header"><h3 class="card-title">Grade-Ready Enrollments</h3></div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Registration</th>
+<th>Student</th>
+<th>Course</th>
+<th>Section</th>
+<th>Basis</th>
+<th>Computed Total</th>
+<th>Status</th>
+<th class="text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+{% for m in marks %}
+<tr>
+<td>{{ m.student_reg_no }}</td>
+<td>{{ m.student_name }}</td>
+<td>{{ m.course_name }}</td>
+<td>{{ m.section_name }} <span class="text-muted">{{ m.semester }}</span></td>
+<td>{{ m.grading_basis }}</td>
+<td><strong>{{ m.computed_total }}</strong></td>
+<td>
+{% if m.is_grade_ready %}
+<span class="badge badge-success">{{ 'Can regenerate' if m.grade_id else 'Ready' }}</span>
+{% else %}
+<span class="badge badge-secondary">Marks missing</span>
+{% endif %}
+</td>
+<td class="text-right">
+{% if m.is_grade_ready %}
+<form method="POST" class="d-inline">
+<input type="hidden" name="enrollment_id" value="{{ m.enrollment_id }}">
+<button class="btn btn-warning btn-sm">{{ 'Regenerate' if m.grade_id else 'Generate' }}</button>
+</form>
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

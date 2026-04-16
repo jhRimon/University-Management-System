@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Grades</h2>
+<p>Final grades are derived from recorded assessment components and can be regenerated whenever marks are updated.</p>
+{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+<a href="/generate_grade" class="btn btn-warning">Run Grade Generator</a>
+<a href="/student_transcript" class="btn btn-primary">Student Transcript</a>
+</div>
+
+<div class="card">
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Registration</th>
+<th>Student</th>
+<th>Course</th>
+<th>Section</th>
+<th>Type</th>
+<th>Total</th>
+<th>Grade</th>
+<th>Point</th>
+</tr>
+</thead>
+<tbody>
+{% for g in grades %}
+<tr>
+<td>{{ g.student_reg_no }}</td>
+<td>{{ g.student_name }}</td>
+<td>{{ g.course_name }}</td>
+<td>{{ g.section_name }} <span class="text-muted">{{ g.semester }}</span></td>
+<td>{{ g.course_type }}</td>
+<td><strong>{{ g.total_marks }}</strong></td>
+<td><span class="badge badge-primary">{{ g.letter_grade }}</span></td>
+<td>{{ g.grade_point }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

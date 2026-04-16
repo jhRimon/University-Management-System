@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">{{ section.course_code }} - {{ section.course_name }}</h2>
+<p>Section {{ section.section_name }} | {{ section.semester }} | Faculty: {{ section.faculty_name or 'Not assigned' }} | Room: {{ section.room_number or 'TBA' }}</p>
+{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+<a href="{{ url_for('main.add_attendance', section_id=section.section_id, faculty_id=section.faculty_id) }}" class="btn btn-success">Take Attendance</a>
+{% if 'lab' in section.course_type|lower %}
+<a href="{{ url_for('main.add_lab_marks', section_id=section.section_id, faculty_id=section.faculty_id) }}" class="btn btn-warning">Enter Lab Marks</a>
+{% else %}
+<a href="{{ url_for('main.add_theory_marks', section_id=section.section_id, faculty_id=section.faculty_id) }}" class="btn btn-warning">Enter Theory Marks</a>
+{% endif %}
+<a href="/generate_grade" class="btn btn-primary">Open Grade Generator</a>
+</div>
+
+<div class="card">
+<div class="card-header"><h3 class="card-title">Section Roster</h3></div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Registration</th>
+<th>Student</th>
+<th>Batch</th>
+<th>Enrolled On</th>
+<th>Marks Snapshot</th>
+<th>Grade</th>
+</tr>
+</thead>
+<tbody>
+{% for row in roster %}
+<tr>
+<td>{{ row.student_reg_no }}</td>
+<td>{{ row.student_name }}</td>
+<td>{{ row.batch }}</td>
+<td>{{ row.enroll_date }}</td>
+<td>
+{% if 'lab' in section.course_type|lower %}
+Report {{ row.lab_report_marks or 0 }}, Eval {{ row.lab_evaluation_marks or 0 }}, Final {{ row.lab_final_marks or 0 }}
+{% else %}
+Quiz {{ row.quiz_marks or 0 }}, Att {{ row.attendance_marks or 0 }}, Pres {{ row.presentation_marks or 0 }}, Mid {{ row.mid_marks or 0 }}, Final {{ row.final_marks or 0 }}
+{% endif %}
+</td>
+<td>
+{% if row.letter_grade %}
+<span class="badge badge-primary">{{ row.letter_grade }}</span> {{ row.total_marks }}
+{% else %}
+<span class="text-muted">Not generated</span>
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="6" class="text-center text-muted py-4">No students are enrolled in this section yet.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

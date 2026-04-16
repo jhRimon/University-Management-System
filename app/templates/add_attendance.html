@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Attendance Console</h2>
+<p>Record attendance from a teaching context. Existing entries for the same student and date are updated instead of duplicated.</p>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-4">
+<div class="card card-outline card-primary">
+<div class="card-header"><h3 class="card-title">Teacher Filter</h3></div>
+<div class="card-body">
+<form method="GET">
+<div class="form-group">
+<label>Faculty</label>
+<select class="form-control" name="faculty_id" onchange="this.form.submit()">
+<option value="">All Faculty</option>
+{% for faculty in faculty_members %}
+<option value="{{ faculty.faculty_id }}" {% if selected_faculty and selected_faculty.faculty_id == faculty.faculty_id %}selected{% endif %}>{{ faculty.name }}</option>
+{% endfor %}
+</select>
+</div>
+{% if selected_section %}
+<input type="hidden" name="section_id" value="{{ selected_section.section_id }}">
+{% endif %}
+</form>
+
+{% if selected_section %}
+<hr>
+<p class="mb-1"><strong>Selected Section</strong></p>
+<p class="mb-1">{{ selected_section.course_code }} - {{ selected_section.course_name }}</p>
+<p class="text-muted mb-0">Section {{ selected_section.section_name }} | {{ selected_section.semester }}</p>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="col-lg-8">
+<div class="card card-primary">
+<div class="card-header"><h3 class="card-title">Record Attendance</h3></div>
+<form method="POST">
+<div class="card-body">
+<div class="form-group">
+<label>Enrollment</label>
+<select class="form-control" name="enrollment_id" required>
+{% for e in enrollments %}
+<option value="{{ e.enrollment_id }}">{{ e.student_reg_no }} - {{ e.student_name }} | {{ e.course_code }} | Section {{ e.section_name }} | {{ e.semester }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Class Date</label>
+<input type="date" class="form-control" name="class_date" required>
+</div>
+<div class="form-group col-md-6">
+<label>Status</label>
+<select class="form-control" name="status" required>
+<option value="Present">Present</option>
+<option value="Absent">Absent</option>
+</select>
+</div>
+</div>
+</div>
+<div class="card-footer">
+<button class="btn btn-primary">Save Attendance</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Courses</h2>
+<p>Courses are now surfaced with delivery mode and section usage so the academic office can manage them more safely.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Course Catalog</h3>
+<div class="card-tools-row">
+<a href="/add_course" class="btn btn-success btn-sm">Add Course</a>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Code</th>
+<th>Name</th>
+<th>Credits</th>
+<th>Type</th>
+<th>Department</th>
+<th>Sections</th>
+<th class="text-right">Manage</th>
+</tr>
+</thead>
+<tbody>
+{% for c in courses %}
+<tr>
+<td>{{ c.course_code }}</td>
+<td>{{ c.course_name }}</td>
+<td>{{ c.credit_hours }}</td>
+<td><span class="badge badge-{{ 'warning' if 'lab' in c.course_type|lower else 'primary' }}">{{ c.course_type }}</span></td>
+<td>{{ c.dept_name }}</td>
+<td><span class="badge badge-info">{{ c.section_count }}</span></td>
+<td class="text-right">
+<a href="{{ url_for('main.confirm_delete', entity='course', record_id=c.course_id) }}" class="btn btn-outline-danger btn-sm">Review Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

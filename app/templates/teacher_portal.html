@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Teacher Portal</h2>
+<p>Faculty work from their assigned sections, then flow into attendance, marks, and grading from that section context.</p>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-4">
+<div class="card card-primary">
+<div class="card-header"><h3 class="card-title">Select Faculty</h3></div>
+<div class="card-body">
+<form method="GET">
+<div class="form-group">
+<label>Faculty Member</label>
+<select name="faculty_id" class="form-control" onchange="this.form.submit()">
+<option value="">Choose faculty</option>
+{% for faculty in faculty_members %}
+<option value="{{ faculty.faculty_id }}" {% if selected_faculty and selected_faculty.faculty_id == faculty.faculty_id %}selected{% endif %}>{{ faculty.name }}{% if faculty.designation %} - {{ faculty.designation }}{% endif %}</option>
+{% endfor %}
+</select>
+</div>
+</form>
+
+{% if selected_faculty %}
+<hr>
+<h5 class="mb-1">{{ selected_faculty.name }}</h5>
+<p class="mb-1">{{ selected_faculty.designation }}</p>
+<p class="text-muted mb-0">{{ selected_faculty.dept_name }}</p>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="col-lg-8">
+<div class="card">
+<div class="card-header"><h3 class="card-title">Assigned Sections</h3></div>
+<div class="card-body p-0">
+<table class="table table-hover mb-0">
+<thead>
+<tr>
+<th>Course</th>
+<th>Section</th>
+<th>Semester</th>
+<th>Room</th>
+<th>Students</th>
+<th class="text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for section in sections %}
+<tr>
+<td>{{ section.course_code }} - {{ section.course_name }} <span class="badge badge-{{ 'warning' if 'lab' in section.course_type|lower else 'primary' }}">{{ section.course_type }}</span></td>
+<td>{{ section.section_name }}</td>
+<td>{{ section.semester }}</td>
+<td>{{ section.room_number }}</td>
+<td><span class="badge badge-info">{{ section.enrollment_count }}</span></td>
+<td class="text-right">
+<a href="{{ url_for('main.section_workspace', section_id=section.section_id) }}" class="btn btn-outline-primary btn-sm">Workspace</a>
+<a href="{{ url_for('main.add_attendance', section_id=section.section_id, faculty_id=selected_faculty.faculty_id) }}" class="btn btn-outline-success btn-sm">Attendance</a>
+{% if 'lab' in section.course_type|lower %}
+<a href="{{ url_for('main.add_lab_marks', section_id=section.section_id, faculty_id=selected_faculty.faculty_id) }}" class="btn btn-outline-warning btn-sm">Lab Marks</a>
+{% else %}
+<a href="{{ url_for('main.add_theory_marks', section_id=section.section_id, faculty_id=selected_faculty.faculty_id) }}" class="btn btn-outline-warning btn-sm">Theory Marks</a>
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="6" class="text-center text-muted py-4">Select a faculty member to load their sections.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

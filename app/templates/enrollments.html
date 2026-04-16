@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Enrollments</h2>
+<p>Enrollment is now treated as an academic workflow with duplicate prevention and clearer course-section context.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Enrollment Ledger</h3>
+<div class="card-tools-row">
+<a href="/add_enrollment" class="btn btn-success btn-sm">New Enrollment</a>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Registration</th>
+<th>Student</th>
+<th>Course</th>
+<th>Section</th>
+<th>Semester</th>
+<th>Faculty</th>
+<th>Date</th>
+<th class="text-right">Manage</th>
+</tr>
+</thead>
+<tbody>
+{% for e in enrollments %}
+<tr>
+<td>{{ e.student_reg_no }}</td>
+<td>{{ e.student_name }}</td>
+<td>{{ e.course_name }} <span class="text-muted">({{ e.course_code }})</span></td>
+<td>{{ e.section_name }}</td>
+<td>{{ e.semester }}</td>
+<td>{{ e.faculty_name }}</td>
+<td>{{ e.enroll_date }}</td>
+<td class="text-right">
+<a href="{{ url_for('main.confirm_delete', entity='enrollment', record_id=e.enrollment_id) }}" class="btn btn-outline-danger btn-sm">Review Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

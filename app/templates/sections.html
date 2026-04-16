@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Sections</h2>
+<p>Sections connect courses, faculty, rooms, and student rosters, so they now act as the operational hub of the UMS.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Section Schedule</h3>
+<div class="card-tools-row">
+<a href="/add_section" class="btn btn-success btn-sm">Add Section</a>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Course</th>
+<th>Code</th>
+<th>Section</th>
+<th>Semester</th>
+<th>Faculty</th>
+<th>Room</th>
+<th>Students</th>
+<th class="text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for s in sections %}
+<tr>
+<td>{{ s.course_name }}</td>
+<td>{{ s.course_code }}</td>
+<td>{{ s.section_name }}</td>
+<td>{{ s.semester }}</td>
+<td>{{ s.faculty_name }}</td>
+<td>{{ s.room_number }}</td>
+<td><span class="badge badge-info">{{ s.enrollment_count }}</span></td>
+<td class="text-right">
+<a href="{{ url_for('main.section_workspace', section_id=s.section_id) }}" class="btn btn-outline-primary btn-sm">Workspace</a>
+<a href="{{ url_for('main.confirm_delete', entity='section', record_id=s.section_id) }}" class="btn btn-outline-danger btn-sm">Review Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

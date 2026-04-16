@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>University Management System</title>
+
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+<style>
+body {
+    background: #f4f6f9;
+}
+
+.content-header-bar {
+    background: linear-gradient(135deg, #103783, #1f6fb2);
+    border-radius: 1rem;
+    color: #fff;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 16px 30px rgba(16, 55, 131, 0.18);
+}
+
+.content-header-bar p {
+    margin: 0.4rem 0 0;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.info-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.card-tools-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+</style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" data-widget="pushmenu" href="#">
+<i class="fas fa-bars"></i>
+</a>
+</li>
+<li class="nav-item d-none d-sm-inline-block">
+<a href="/" class="nav-link">Home</a>
+</li>
+</ul>
+</nav>
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<a href="/" class="brand-link text-center">
+<span class="brand-text font-weight-light">Smart UMS</span>
+</a>
+
+<div class="sidebar">
+<nav class="mt-2">
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+
+<li class="nav-header">Overview</li>
+<li class="nav-item">
+<a href="/" class="nav-link">
+<i class="nav-icon fas fa-chart-line"></i>
+<p>Dashboard</p>
+</a>
+</li>
+<li class="nav-item">
+<a href="/teacher_portal" class="nav-link">
+<i class="nav-icon fas fa-person-chalkboard"></i>
+<p>Teacher Portal</p>
+</a>
+</li>
+
+<li class="nav-header">Academic Setup</li>
+<li class="nav-item"><a href="/departments" class="nav-link"><i class="nav-icon fas fa-building"></i><p>Departments</p></a></li>
+<li class="nav-item"><a href="/add_department" class="nav-link"><i class="nav-icon fas fa-plus"></i><p>Add Department</p></a></li>
+<li class="nav-item"><a href="/faculty" class="nav-link"><i class="nav-icon fas fa-chalkboard-teacher"></i><p>Faculty</p></a></li>
+<li class="nav-item"><a href="/add_faculty" class="nav-link"><i class="nav-icon fas fa-user-plus"></i><p>Add Faculty</p></a></li>
+<li class="nav-item"><a href="/students" class="nav-link"><i class="nav-icon fas fa-user-graduate"></i><p>Students</p></a></li>
+<li class="nav-item"><a href="/add_student" class="nav-link"><i class="nav-icon fas fa-user-plus"></i><p>Add Student</p></a></li>
+<li class="nav-item"><a href="/courses" class="nav-link"><i class="nav-icon fas fa-book"></i><p>Courses</p></a></li>
+<li class="nav-item"><a href="/add_course" class="nav-link"><i class="nav-icon fas fa-plus"></i><p>Add Course</p></a></li>
+<li class="nav-item"><a href="/sections" class="nav-link"><i class="nav-icon fas fa-layer-group"></i><p>Sections</p></a></li>
+<li class="nav-item"><a href="/add_section" class="nav-link"><i class="nav-icon fas fa-plus"></i><p>Add Section</p></a></li>
+
+<li class="nav-header">Operations</li>
+<li class="nav-item"><a href="/enrollments" class="nav-link"><i class="nav-icon fas fa-user-check"></i><p>Enrollments</p></a></li>
+<li class="nav-item"><a href="/add_enrollment" class="nav-link"><i class="nav-icon fas fa-file-signature"></i><p>New Enrollment</p></a></li>
+<li class="nav-item"><a href="/attendance" class="nav-link"><i class="nav-icon fas fa-calendar-check"></i><p>Attendance Ledger</p></a></li>
+<li class="nav-item"><a href="/add_attendance" class="nav-link"><i class="nav-icon fas fa-clipboard-check"></i><p>Attendance Console</p></a></li>
+<li class="nav-item"><a href="/theory_marks" class="nav-link"><i class="nav-icon fas fa-clipboard-list"></i><p>Theory Marks</p></a></li>
+<li class="nav-item"><a href="/add_theory_marks" class="nav-link"><i class="nav-icon fas fa-pen"></i><p>Enter Theory Marks</p></a></li>
+<li class="nav-item"><a href="/lab_marks" class="nav-link"><i class="nav-icon fas fa-flask"></i><p>Lab Marks</p></a></li>
+<li class="nav-item"><a href="/add_lab_marks" class="nav-link"><i class="nav-icon fas fa-vials"></i><p>Enter Lab Marks</p></a></li>
+<li class="nav-item"><a href="/grades" class="nav-link"><i class="nav-icon fas fa-award"></i><p>Grades</p></a></li>
+<li class="nav-item"><a href="/generate_grade" class="nav-link"><i class="nav-icon fas fa-calculator"></i><p>Grade Generator</p></a></li>
+<li class="nav-item"><a href="/student_transcript" class="nav-link"><i class="nav-icon fas fa-file-lines"></i><p>Student Transcript</p></a></li>
+
+</ul>
+</nav>
+</div>
+</aside>
+
+<div class="content-wrapper">
+<section class="content pt-4">
+<div class="container-fluid">
+
+{% set page_header_content %}{% block page_header %}{% endblock %}{% endset %}
+{% if page_header_content|trim %}
+<div class="content-header-bar">
+{{ page_header_content }}
+</div>
+{% endif %}
+
+{% if request.args.get("message") %}
+<div class="alert alert-{{ request.args.get('status', 'info') }} alert-dismissible fade show" role="alert">
+{{ request.args.get("message") }}
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+</div>
+</section>
+</div>
+
+<footer class="main-footer text-center">
+<strong>University Management System</strong>
+<div class="text-muted">Safer operations, teacher-driven workflows, and professional grading.</div>
+</footer>
+</div>
+
+<script
+src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/jquery/jquery.min.js"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+
+</html>

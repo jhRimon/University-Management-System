@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Theory Marks</h2>
+<p>Theory grading components are normalized to a 100-mark professional breakdown.</p>
+{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+<a href="/teacher_portal" class="btn btn-primary">Teacher Portal</a>
+<a href="/add_theory_marks" class="btn btn-success">Enter Theory Marks</a>
+</div>
+
+<div class="card">
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Registration</th>
+<th>Student</th>
+<th>Course</th>
+<th>Section</th>
+<th>Quiz</th>
+<th>Attendance</th>
+<th>Presentation</th>
+<th>Mid</th>
+<th>Final</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+{% for m in marks %}
+<tr>
+<td>{{ m.student_reg_no }}</td>
+<td>{{ m.student_name }}</td>
+<td>{{ m.course_name }}</td>
+<td>{{ m.section_name }} <span class="text-muted">{{ m.semester }}</span></td>
+<td>{{ m.quiz_marks }}</td>
+<td>{{ m.attendance_marks }}</td>
+<td>{{ m.presentation_marks }}</td>
+<td>{{ m.mid_marks }}</td>
+<td>{{ m.final_marks }}</td>
+<td><strong>{{ m.total_marks }}</strong></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

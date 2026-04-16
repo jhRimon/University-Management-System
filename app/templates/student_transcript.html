@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Student Transcript</h2>
+<p>View subject-wise results for each semester, plus automatically calculated semester GPA and cumulative CGPA.</p>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-4">
+<div class="card card-primary">
+<div class="card-header"><h3 class="card-title">Choose Student</h3></div>
+<div class="card-body">
+<form method="GET">
+<div class="form-group">
+<label>Student</label>
+<select name="student_id" class="form-control" onchange="this.form.submit()">
+<option value="">Select student</option>
+{% for student in students %}
+<option value="{{ student.student_id }}" {% if selected_student_id == student.student_id %}selected{% endif %}>
+{{ student.student_reg_no }} - {{ student.name }}{% if student.batch %} ({{ student.batch }}){% endif %}
+</option>
+{% endfor %}
+</select>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div class="col-lg-8">
+{% if transcript %}
+<div class="card card-outline card-info">
+<div class="card-header"><h3 class="card-title">Student Summary</h3></div>
+<div class="card-body">
+<div class="row">
+<div class="col-md-6">
+<p class="mb-1"><strong>{{ transcript.student.student_name }}</strong></p>
+<p class="mb-1">Registration: {{ transcript.student.student_reg_no }}</p>
+<p class="text-muted mb-0">Batch: {{ transcript.student.batch }}</p>
+</div>
+<div class="col-md-6">
+<p class="mb-1">Semesters Completed: <strong>{{ transcript.overall.total_semesters }}</strong></p>
+<p class="mb-1">Earned Credits: <strong>{{ transcript.overall.earned_credits }}</strong></p>
+<p class="mb-0">Overall CGPA: <strong>{{ transcript.overall.cgpa if transcript.overall.cgpa is not none else 'N/A' }}</strong></p>
+</div>
+</div>
+</div>
+</div>
+
+{% for semester in transcript.semesters %}
+<div class="card">
+<div class="card-header d-flex justify-content-between align-items-center">
+<h3 class="card-title">{{ semester.semester }}</h3>
+<div>
+<span class="badge badge-primary mr-2">SGPA: {{ semester.sgpa if semester.sgpa is not none else 'N/A' }}</span>
+<span class="badge badge-success">CGPA: {{ semester.cgpa if semester.cgpa is not none else 'N/A' }}</span>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover mb-0">
+<thead>
+<tr>
+<th>Course Code</th>
+<th>Course</th>
+<th>Section</th>
+<th>Type</th>
+<th>Credit</th>
+<th>Total</th>
+<th>Grade</th>
+<th>Point</th>
+</tr>
+</thead>
+<tbody>
+{% for course in semester.courses %}
+<tr>
+<td>{{ course.course_code }}</td>
+<td>{{ course.course_name }}</td>
+<td>{{ course.section_name }}</td>
+<td>{{ course.course_type }}</td>
+<td>{{ course.credit_hours }}</td>
+<td>
+{% if course.is_grade_ready %}
+<strong>{{ course.computed_total }}</strong>
+{% else %}
+<span class="text-muted">Marks pending</span>
+{% endif %}
+</td>
+<td>
+{% if course.computed_letter_grade %}
+<span class="badge badge-primary">{{ course.computed_letter_grade }}</span>
+{% else %}
+<span class="text-muted">Pending</span>
+{% endif %}
+</td>
+<td>{{ course.computed_grade_point if course.computed_grade_point is not none else 'N/A' }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endfor %}
+{% elif selected_student_id %}
+<div class="alert alert-warning">No transcript data found for the selected student yet.</div>
+{% else %}
+<div class="alert alert-info">Select a student to view semester-wise courses, GPA, and CGPA.</div>
+{% endif %}
+</div>
+</div>
+{% endblock %}

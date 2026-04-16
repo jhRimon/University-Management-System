@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Add Section</h2>
+
+<form method="POST">
+
+<label>Course</label>
+<select class="form-control mb-3" name="course_id">
+
+{% for c in courses %}
+
+<option value="{{ c.course_id }}">
+{{ c.course_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+
+<label>Faculty</label>
+<select class="form-control mb-3" name="faculty_id">
+
+{% for f in faculty %}
+
+<option value="{{ f.faculty_id }}">
+{{ f.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+
+<label>Classroom</label>
+<select class="form-control mb-3" name="classroom_id">
+
+{% for cl in classrooms %}
+
+<option value="{{ cl.classroom_id }}">
+{{ cl.room_number }}
+</option>
+
+{% endfor %}
+
+</select>
+
+
+<input class="form-control mb-3"
+name="section_name"
+placeholder="Section (A,B,C)">
+
+<input class="form-control mb-3"
+name="semester"
+placeholder="Semester (Fall 2025)">
+
+
+<button class="btn btn-primary">
+Add Section
+</button>
+
+</form>
+
+{% endblock %}

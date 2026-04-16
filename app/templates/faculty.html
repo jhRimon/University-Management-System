@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Faculty Directory</h2>
+<p>Faculty records are connected to teaching operations, so management actions now route through review-first screens.</p>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Faculty Members</h3>
+<div class="card-tools-row">
+<a href="/add_faculty" class="btn btn-success btn-sm">Add Faculty</a>
+<a href="/teacher_portal" class="btn btn-primary btn-sm">Teacher Portal</a>
+</div>
+</div>
+<div class="card-body p-0">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Designation</th>
+<th>Department</th>
+<th>Sections</th>
+<th class="text-right">Manage</th>
+</tr>
+</thead>
+<tbody>
+{% for f in faculty %}
+<tr>
+<td>{{ f.faculty_id }}</td>
+<td>{{ f.name }}</td>
+<td>{{ f.email }}</td>
+<td>{{ f.designation }}</td>
+<td>{{ f.dept_name }}</td>
+<td><span class="badge badge-info">{{ f.section_count }}</span></td>
+<td class="text-right">
+<a href="{{ url_for('main.teacher_portal', faculty_id=f.faculty_id) }}" class="btn btn-outline-primary btn-sm">Open Portal</a>
+<a href="{{ url_for('main.confirm_delete', entity='faculty', record_id=f.faculty_id) }}" class="btn btn-outline-danger btn-sm">Review Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

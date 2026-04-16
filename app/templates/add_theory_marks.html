@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+<h2 class="mb-1">Theory Marks Console</h2>
+<p>Theory components follow a professional 100-mark structure: Quiz {{ limits.quiz }}, Attendance {{ limits.attendance }}, Presentation {{ limits.presentation }}, Mid {{ limits.mid }}, Final {{ limits.final }}.</p>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-4">
+<div class="card card-outline card-info">
+<div class="card-header"><h3 class="card-title">Context</h3></div>
+<div class="card-body">
+{% if selected_section %}
+<p class="mb-1"><strong>{{ selected_section.course_code }} - {{ selected_section.course_name }}</strong></p>
+<p class="mb-1">Section {{ selected_section.section_name }} | {{ selected_section.semester }}</p>
+<p class="text-muted mb-0">Faculty: {{ selected_section.faculty_name or 'Not assigned' }}</p>
+{% else %}
+<p class="text-muted mb-0">Open this page from the teacher portal to enter marks for one section at a time, or use it globally if needed.</p>
+{% endif %}
+</div>
+</div>
+</div>
+
+<div class="col-lg-8">
+<div class="card card-primary">
+<div class="card-header"><h3 class="card-title">Enter or Update Marks</h3></div>
+<form method="POST">
+<div class="card-body">
+<div class="form-group">
+<label>Enrollment</label>
+<select name="enrollment_id" class="form-control" required>
+{% for e in enrollments %}
+<option value="{{ e.enrollment_id }}">{{ e.student_reg_no }} - {{ e.student_name }} | {{ e.course_code }} | Section {{ e.section_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="form-row">
+<div class="form-group col-md-4">
+<label>Quiz</label>
+<input name="quiz" class="form-control" type="number" step="0.01" min="0" max="{{ limits.quiz }}" required>
+</div>
+<div class="form-group col-md-4">
+<label>Attendance</label>
+<input name="attendance" class="form-control" type="number" step="0.01" min="0" max="{{ limits.attendance }}" required>
+</div>
+<div class="form-group col-md-4">
+<label>Presentation</label>
+<input name="presentation" class="form-control" type="number" step="0.01" min="0" max="{{ limits.presentation }}" required>
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Mid</label>
+<input name="mid" class="form-control" type="number" step="0.01" min="0" max="{{ limits.mid }}" required>
+</div>
+<div class="form-group col-md-6">
+<label>Final</label>
+<input name="final" class="form-control" type="number" step="0.01" min="0" max="{{ limits.final }}" required>
+</div>
+</div>
+</div>
+<div class="card-footer">
+<button class="btn btn-primary">Save Theory Marks</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

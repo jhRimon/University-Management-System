@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Add Faculty</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Name</label>
+<input type="text" name="name" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Email</label>
+<input type="email" name="email" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Designation</label>
+<input type="text" name="designation" class="form-control">
+</div>
+
+<div class="mb-3">
+<label>Department</label>
+
+<select name="dept_id" class="form-control">
+
+{% for d in departments %}
+
+<option value="{{ d.dept_id }}">
+{{ d.dept_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button class="btn btn-primary">
+Add Faculty
+</button>
+
+</form>
+
+{% endblock %}
